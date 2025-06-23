@@ -6,4 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CarAz.Core\CarAz.Core.csproj" />
+    <ProjectReference Include="..\CarAz.Infrastructure\CarAz.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

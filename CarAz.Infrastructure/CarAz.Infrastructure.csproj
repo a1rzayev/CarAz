@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CarAz.Core\CarAz.Core.csproj" />
+  </ItemGroup>
+
 </Project>
