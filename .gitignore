@@ -1,0 +1,52 @@
+# Build Folders
+**/bin/
+**/obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio Code settings
+.vscode/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# NuGet packages
+*.nupkg
+# NuGet package folders
+**/packages/
+# Project lock files
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Logs
+*.log
+
+# wwwroot third-party libraries (restore with LibMan or npm)
+CarAz.Presentation/wwwroot/lib/
+
+# Rider
+.idea/
+
+# Others
+*.dbmdl
+*.bak
+*.backup
+*.mdf
+*.ldf
+
+# Resharper
+*.DotSettings.user
+_ReSharper*/
+*.[Rr]e[Ss]harper
+
+# Local history for JetBrains IDEs
+.localhistory/ 
