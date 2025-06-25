@@ -1,8 +1,146 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-4">
+    <!-- Hero Section -->
+    <div class="row mb-5">
+        <div class="col-md-12">
+            <div class="card bg-primary text-white">
+                <div class="card-body text-center py-5">
+                    <h1 class="display-4">
+                        <i class="fas fa-car"></i> Welcome to CarAz
+                    </h1>
+                    <p class="lead">Your premier car marketplace for buying, selling, and renting vehicles</p>
+                    <div class="mt-4">
+                        <a asp-page="/Cars/Index" class="btn btn-light btn-lg me-3">
+                            <i class="fas fa-search"></i> Browse Cars
+                        </a>
+                        <a asp-page="/Cars/Create" class="btn btn-outline-light btn-lg">
+                            <i class="fas fa-plus"></i> List Your Car
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="row mb-5">
+        <div class="col-md-12">
+            <h2 class="text-center mb-4">What We Offer</h2>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 text-center">
+                <div class="card-body">
+                    <i class="fas fa-car fa-3x text-primary mb-3"></i>
+                    <h5 class="card-title">Car Listings</h5>
+                    <p class="card-text">Browse through our extensive collection of cars from trusted sellers and dealers.</p>
+                    <a asp-page="/Cars/Index" class="btn btn-primary">Browse Cars</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 text-center">
+                <div class="card-body">
+                    <i class="fas fa-calendar-check fa-3x text-success mb-3"></i>
+                    <h5 class="card-title">Easy Booking</h5>
+                    <p class="card-text">Book test drives, rentals, or purchases with our simple booking system.</p>
+                    <a asp-page="/Bookings/Index" class="btn btn-success">View Bookings</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 text-center">
+                <div class="card-body">
+                    <i class="fas fa-heart fa-3x text-danger mb-3"></i>
+                    <h5 class="card-title">Favorites</h5>
+                    <p class="card-text">Save your favorite cars and keep track of vehicles you're interested in.</p>
+                    <a asp-page="/Favorites/Index" class="btn btn-danger">My Favorites</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row mb-5">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Quick Actions</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <a asp-page="/Cars/Create" class="btn btn-outline-primary w-100">
+                                <i class="fas fa-plus"></i><br>
+                                Add New Car
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a asp-page="/Bookings/Create" class="btn btn-outline-success w-100">
+                                <i class="fas fa-calendar-plus"></i><br>
+                                New Booking
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a asp-page="/Users/Index" class="btn btn-outline-info w-100">
+                                <i class="fas fa-users"></i><br>
+                                Manage Users
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a asp-page="/Favorites/Index" class="btn btn-outline-warning w-100">
+                                <i class="fas fa-heart"></i><br>
+                                My Favorites
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Platform Statistics</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-md-3 mb-3">
+                            <div class="border rounded p-3">
+                                <i class="fas fa-car fa-2x text-primary mb-2"></i>
+                                <h4 class="text-primary">0</h4>
+                                <p class="mb-0">Cars Available</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="border rounded p-3">
+                                <i class="fas fa-users fa-2x text-success mb-2"></i>
+                                <h4 class="text-success">0</h4>
+                                <p class="mb-0">Registered Users</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="border rounded p-3">
+                                <i class="fas fa-calendar fa-2x text-info mb-2"></i>
+                                <h4 class="text-info">0</h4>
+                                <p class="mb-0">Total Bookings</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="border rounded p-3">
+                                <i class="fas fa-star fa-2x text-warning mb-2"></i>
+                                <h4 class="text-warning">0</h4>
+                                <p class="mb-0">Favorites</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

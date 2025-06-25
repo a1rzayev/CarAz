@@ -36,13 +36,13 @@ public class IndexModel : PageModel
             "Cancelled"
         });
 
+        // Get all bookings and filter in memory
+        Bookings = await _bookingRepository.GetAllAsync();
+
+        // Apply status filter if specified
         if (!string.IsNullOrEmpty(StatusFilter))
         {
-            Bookings = await _bookingRepository.GetByStatusAsync(StatusFilter);
-        }
-        else
-        {
-            Bookings = await _bookingRepository.GetAllAsync();
+            Bookings = Bookings.Where(b => b.Status == StatusFilter);
         }
 
         // Apply type filter if specified
