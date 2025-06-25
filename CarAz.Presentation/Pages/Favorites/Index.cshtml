@@ -1,0 +1,100 @@
+@page
+@model CarAz.Presentation.Pages.Favorites.IndexModel
+@{
+    ViewData["Title"] = "My Favorites";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>My Favorite Cars</h2>
+            <p class="text-muted">Cars you've added to your favorites</p>
+        </div>
+    </div>
+
+    <div class="row">
+        @if (Model.FavoriteCars.Any())
+        {
+            @foreach (var favorite in Model.FavoriteCars)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        @if (!string.IsNullOrEmpty(favorite.Car.ImageUrl))
+                        {
+                            <img src="@favorite.Car.ImageUrl" class="card-img-top" alt="@favorite.Car.Brand @favorite.Car.Model" style="height: 200px; object-fit: cover;">
+                        }
+                        else
+                        {
+                            <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                                <i class="fas fa-car fa-3x text-muted"></i>
+                            </div>
+                        }
+                        <div class="card-body">
+                            <h5 class="card-title">@favorite.Car.Brand @favorite.Car.Model</h5>
+                            <p class="card-text">
+                                <strong>Year:</strong> @favorite.Car.Year<br>
+                                <strong>Price:</strong> $@favorite.Car.Price.ToString("N0")<br>
+                                <strong>Mileage:</strong> @favorite.Car.Mileage.ToString("N0") km<br>
+                                <strong>Color:</strong> @favorite.Car.Color<br>
+                                <strong>Fuel:</strong> @favorite.Car.FuelType<br>
+                                <strong>Transmission:</strong> @favorite.Car.Transmission
+                            </p>
+                            @if (!string.IsNullOrEmpty(favorite.Car.Description))
+                            {
+                                <p class="card-text">@favorite.Car.Description</p>
+                            }
+                        </div>
+                        <div class="card-footer">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge bg-@(favorite.Car.IsAvailable ? "success" : "danger")">
+                                    @(favorite.Car.IsAvailable ? "Available" : "Not Available")
+                                </span>
+                                <small class="text-muted">Added @favorite.CreatedAt.ToString("MMM dd, yyyy")</small>
+                            </div>
+                            <div class="d-flex justify-content-between mt-2">
+                                <a asp-page="../Cars/Details" asp-route-id="@favorite.Car.Id" class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-eye"></i> View Details
+                                </a>
+                                @if (favorite.Car.IsAvailable)
+                                {
+                                    <a asp-page="../Bookings/Create" asp-route-carId="@favorite.Car.Id" class="btn btn-sm btn-success">
+                                        <i class="fas fa-calendar-plus"></i> Book Now
+                                    </a>
+                                }
+                                <button class="btn btn-sm btn-outline-danger" onclick="removeFavorite('@favorite.Id', '@favorite.Car.Brand @favorite.Car.Model')">
+                                    <i class="fas fa-heart-broken"></i> Remove
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <i class="fas fa-heart fa-3x text-muted mb-3"></i>
+                        <h4>No favorites yet</h4>
+                        <p class="text-muted">You haven't added any cars to your favorites yet.</p>
+                        <a asp-page="../Cars/Index" class="btn btn-primary">
+                            <i class="fas fa-car"></i> Browse Cars
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function removeFavorite(favoriteId, carName) {
+            if (confirm(`Are you sure you want to remove "${carName}" from your favorites?`)) {
+                // TODO: Implement remove favorite functionality
+                alert('Remove favorite functionality will be implemented in the next step!');
+            }
+        }
+    </script>
+} 
