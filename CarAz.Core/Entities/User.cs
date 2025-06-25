@@ -45,4 +45,5 @@ public class User
     public virtual ICollection<Car> OwnedCars { get; set; } = new List<Car>();
     public virtual ICollection<FavoriteCar> FavoriteCars { get; set; } = new List<FavoriteCar>();
     public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
+    public virtual ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
 } 

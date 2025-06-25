@@ -13,6 +13,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Car> Cars { get; set; }
     public DbSet<Booking> Bookings { get; set; }
     public DbSet<FavoriteCar> FavoriteCars { get; set; }
+    public DbSet<RefreshToken> RefreshTokens { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -94,6 +95,25 @@ public class ApplicationDbContext : DbContext
 
             // Composite unique constraint to prevent duplicate favorites
             entity.HasIndex(e => new { e.UserId, e.CarId }).IsUnique();
+        });
+
+        // RefreshToken configuration
+        modelBuilder.Entity<RefreshToken>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Token).IsRequired().HasMaxLength(500);
+            entity.Property(e => e.ReasonRevoked).HasMaxLength(200);
+            entity.Property(e => e.ReplacedByToken).HasMaxLength(500);
+            entity.Property(e => e.RevokedBy).HasMaxLength(100);
+
+            // Foreign key relationship
+            entity.HasOne(e => e.User)
+                  .WithMany(e => e.RefreshTokens)
+                  .HasForeignKey(e => e.UserId)
+                  .OnDelete(DeleteBehavior.Cascade);
+
+            // Index for token lookup
+            entity.HasIndex(e => e.Token).IsUnique();
         });
     }
 } 
