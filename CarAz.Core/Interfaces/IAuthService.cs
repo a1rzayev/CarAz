@@ -1,4 +1,5 @@
-using CarAz.Core.DTOs;
+using CarAz.Core.DTOs.Requests;
+using CarAz.Core.DTOs.Responses;
 
 namespace CarAz.Core.Interfaces;
 
