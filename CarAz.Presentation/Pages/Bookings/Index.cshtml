@@ -1,0 +1,166 @@
+@page
+@model CarAz.Presentation.Pages.Bookings.IndexModel
+@{
+    ViewData["Title"] = "Bookings";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Bookings Management</h2>
+            <div class="mb-3">
+                <a asp-page="Create" class="btn btn-primary">
+                    <i class="fas fa-calendar-plus"></i> New Booking
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Status Filter -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <form method="get" class="row g-3">
+                        <div class="col-md-3">
+                            <label asp-for="StatusFilter" class="form-label">Status</label>
+                            <select asp-for="StatusFilter" class="form-select" asp-items="Model.StatusOptions">
+                                <option value="">All Statuses</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label asp-for="TypeFilter" class="form-label">Type</label>
+                            <select asp-for="TypeFilter" class="form-select">
+                                <option value="">All Types</option>
+                                <option value="Test Drive">Test Drive</option>
+                                <option value="Rent">Rent</option>
+                                <option value="Buy">Buy</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">&nbsp;</label>
+                            <button type="submit" class="btn btn-secondary d-block w-100">Filter</button>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">&nbsp;</label>
+                            <a asp-page="./Index" class="btn btn-outline-secondary d-block w-100">Clear</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Customer</th>
+                                    <th>Car</th>
+                                    <th>Type</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Price</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var booking in Model.Bookings)
+                                {
+                                    <tr>
+                                        <td>
+                                            <strong>@booking.User.FirstName @booking.User.LastName</strong><br>
+                                            <small class="text-muted">@booking.User.Email</small>
+                                        </td>
+                                        <td>
+                                            <strong>@booking.Car.Brand @booking.Car.Model</strong><br>
+                                            <small class="text-muted">@booking.Car.Year - @booking.Car.Color</small>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-@(booking.Type switch {
+                                                "Test Drive" => "info",
+                                                "Rent" => "warning",
+                                                "Buy" => "success",
+                                                _ => "secondary"
+                                            })">
+                                                @booking.Type
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <strong>@booking.StartDate.ToString("MMM dd, yyyy")</strong><br>
+                                            <small class="text-muted">
+                                                @booking.StartDate.ToString("HH:mm")
+                                                @if (booking.EndDate.HasValue)
+                                                {
+                                                    <span>- @booking.EndDate.Value.ToString("HH:mm")</span>
+                                                }
+                                            </small>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-@(booking.Status switch {
+                                                "Pending" => "warning",
+                                                "Confirmed" => "success",
+                                                "Completed" => "info",
+                                                "Cancelled" => "danger",
+                                                _ => "secondary"
+                                            })">
+                                                @booking.Status
+                                            </span>
+                                        </td>
+                                        <td>
+                                            @if (booking.TotalPrice.HasValue)
+                                            {
+                                                <strong>$@booking.TotalPrice.Value.ToString("N0")</strong>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">TBD</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            <div class="btn-group" role="group">
+                                                <a asp-page="./Details" asp-route-id="@booking.Id" class="btn btn-sm btn-outline-primary">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                <a asp-page="./Edit" asp-route-id="@booking.Id" class="btn btn-sm btn-outline-secondary">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                @if (booking.Status == "Pending")
+                                                {
+                                                    <button type="button" class="btn btn-sm btn-outline-success" 
+                                                            onclick="confirmBooking('@booking.Id', 'confirm')">
+                                                        <i class="fas fa-check"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-sm btn-outline-danger" 
+                                                            onclick="confirmBooking('@booking.Id', 'cancel')">
+                                                        <i class="fas fa-times"></i>
+                                                    </button>
+                                                }
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function confirmBooking(bookingId, action) {
+            const actionText = action === 'confirm' ? 'confirm' : 'cancel';
+            if (confirm(`Are you sure you want to ${actionText} this booking?`)) {
+                // TODO: Implement booking confirmation/cancellation
+                alert(`${actionText} functionality will be implemented in the next step!`);
+            }
+        }
+    </script>
+} 

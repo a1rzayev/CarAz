@@ -1,0 +1,98 @@
+@page
+@model CarAz.Presentation.Pages.Users.IndexModel
+@{
+    ViewData["Title"] = "Users";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Users Management</h2>
+            <div class="mb-3">
+                <a asp-page="Create" class="btn btn-primary">
+                    <i class="fas fa-user-plus"></i> Add New User
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Phone</th>
+                                    <th>Status</th>
+                                    <th>Created</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var user in Model.Users)
+                                {
+                                    <tr>
+                                        <td>
+                                            <strong>@user.FirstName @user.LastName</strong>
+                                        </td>
+                                        <td>@user.Email</td>
+                                        <td>
+                                            <span class="badge bg-@(user.Role switch {
+                                                "Admin" => "danger",
+                                                "Dealer" => "warning",
+                                                _ => "info"
+                                            })">
+                                                @user.Role
+                                            </span>
+                                        </td>
+                                        <td>@(user.PhoneNumber ?? "N/A")</td>
+                                        <td>
+                                            <span class="badge bg-@(user.IsActive ? "success" : "secondary")">
+                                                @(user.IsActive ? "Active" : "Inactive")
+                                            </span>
+                                            @if (user.IsEmailVerified)
+                                            {
+                                                <span class="badge bg-info ms-1">Verified</span>
+                                            }
+                                        </td>
+                                        <td>@user.CreatedAt.ToString("MMM dd, yyyy")</td>
+                                        <td>
+                                            <div class="btn-group" role="group">
+                                                <a asp-page="./Details" asp-route-id="@user.Id" class="btn btn-sm btn-outline-primary">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                <a asp-page="./Edit" asp-route-id="@user.Id" class="btn btn-sm btn-outline-secondary">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <button type="button" class="btn btn-sm btn-outline-danger" 
+                                                        onclick="confirmDelete('@user.Id', '@user.FirstName @user.LastName')">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function confirmDelete(userId, userName) {
+            if (confirm(`Are you sure you want to delete user "${userName}"?`)) {
+                // TODO: Implement delete functionality
+                alert('Delete functionality will be implemented in the next step!');
+            }
+        }
+    </script>
+} 
