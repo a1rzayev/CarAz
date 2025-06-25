@@ -1,0 +1,106 @@
+@page
+@model CarAz.Presentation.Pages.Cars.IndexModel
+@{
+    ViewData["Title"] = "Cars";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Available Cars</h2>
+            <div class="mb-3">
+                <a asp-page="Create" class="btn btn-primary">Add New Car</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Filters -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <form method="get" class="row g-3">
+                        <div class="col-md-3">
+                            <label asp-for="SearchModel.Brand" class="form-label">Brand</label>
+                            <input asp-for="SearchModel.Brand" class="form-control" placeholder="e.g., Toyota">
+                        </div>
+                        <div class="col-md-3">
+                            <label asp-for="SearchModel.Model" class="form-label">Model</label>
+                            <input asp-for="SearchModel.Model" class="form-control" placeholder="e.g., Camry">
+                        </div>
+                        <div class="col-md-2">
+                            <label asp-for="SearchModel.MinPrice" class="form-label">Min Price</label>
+                            <input asp-for="SearchModel.MinPrice" class="form-control" type="number">
+                        </div>
+                        <div class="col-md-2">
+                            <label asp-for="SearchModel.MaxPrice" class="form-label">Max Price</label>
+                            <input asp-for="SearchModel.MaxPrice" class="form-control" type="number">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">&nbsp;</label>
+                            <button type="submit" class="btn btn-secondary d-block w-100">Search</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cars Grid -->
+    <div class="row">
+        @if (Model.Cars.Any())
+        {
+            @foreach (var car in Model.Cars)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        @if (!string.IsNullOrEmpty(car.ImageUrl))
+                        {
+                            <img src="@car.ImageUrl" class="card-img-top" alt="@car.Brand @car.Model" style="height: 200px; object-fit: cover;">
+                        }
+                        else
+                        {
+                            <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                                <i class="fas fa-car fa-3x text-muted"></i>
+                            </div>
+                        }
+                        <div class="card-body">
+                            <h5 class="card-title">@car.Brand @car.Model</h5>
+                            <p class="card-text">
+                                <strong>Year:</strong> @car.Year<br>
+                                <strong>Price:</strong> $@car.Price.ToString("N0")<br>
+                                <strong>Mileage:</strong> @car.Mileage.ToString("N0") km<br>
+                                <strong>Color:</strong> @car.Color<br>
+                                <strong>Fuel:</strong> @car.FuelType<br>
+                                <strong>Transmission:</strong> @car.Transmission
+                            </p>
+                            @if (!string.IsNullOrEmpty(car.Description))
+                            {
+                                <p class="card-text">@car.Description</p>
+                            }
+                        </div>
+                        <div class="card-footer">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge bg-@(car.IsAvailable ? "success" : "danger")">
+                                    @(car.IsAvailable ? "Available" : "Not Available")
+                                </span>
+                                <div>
+                                    <a asp-page="./Details" asp-route-id="@car.Id" class="btn btn-sm btn-outline-primary">Details</a>
+                                    <a asp-page="./Edit" asp-route-id="@car.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12">
+                <div class="alert alert-info">
+                    No cars found matching your criteria.
+                </div>
+            </div>
+        }
+    </div>
+</div> 
