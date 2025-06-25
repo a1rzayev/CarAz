@@ -1,0 +1,111 @@
+@page "{id:guid}"
+@model CarAz.Presentation.Pages.Cars.DetailsModel
+@{
+    ViewData["Title"] = $"{Model.Car.Brand} {Model.Car.Model}";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                @if (!string.IsNullOrEmpty(Model.Car.ImageUrl))
+                {
+                    <img src="@Model.Car.ImageUrl" class="card-img-top" alt="@Model.Car.Brand @Model.Car.Model" style="height: 400px; object-fit: cover;">
+                }
+                else
+                {
+                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 400px;">
+                        <i class="fas fa-car fa-5x text-muted"></i>
+                    </div>
+                }
+                <div class="card-body">
+                    <h2 class="card-title">@Model.Car.Brand @Model.Car.Model</h2>
+                    <p class="card-text">@Model.Car.Description</p>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Car Details</h5>
+                            <ul class="list-unstyled">
+                                <li><strong>Year:</strong> @Model.Car.Year</li>
+                                <li><strong>Price:</strong> $@Model.Car.Price.ToString("N0")</li>
+                                <li><strong>Mileage:</strong> @Model.Car.Mileage.ToString("N0") km</li>
+                                <li><strong>Color:</strong> @Model.Car.Color</li>
+                                <li><strong>Fuel Type:</strong> @Model.Car.FuelType</li>
+                                <li><strong>Transmission:</strong> @Model.Car.Transmission</li>
+                                <li><strong>Status:</strong> @Model.Car.Status</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Owner Information</h5>
+                            <ul class="list-unstyled">
+                                <li><strong>Owner:</strong> @Model.Car.Owner.FirstName @Model.Car.Owner.LastName</li>
+                                <li><strong>Email:</strong> @Model.Car.Owner.Email</li>
+                                @if (!string.IsNullOrEmpty(Model.Car.Owner.PhoneNumber))
+                                {
+                                    <li><strong>Phone:</strong> @Model.Car.Owner.PhoneNumber</li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Actions</h5>
+                    <div class="d-grid gap-2">
+                        @if (Model.Car.IsAvailable)
+                        {
+                            <a asp-page="../Bookings/Create" asp-route-carId="@Model.Car.Id" class="btn btn-primary">
+                                <i class="fas fa-calendar-plus"></i> Book Test Drive
+                            </a>
+                        }
+                        <button class="btn btn-outline-warning" onclick="toggleFavorite('@Model.Car.Id')">
+                            <i class="fas fa-heart"></i> Add to Favorites
+                        </button>
+                        <a asp-page="./Edit" asp-route-id="@Model.Car.Id" class="btn btn-outline-secondary">
+                            <i class="fas fa-edit"></i> Edit Car
+                        </a>
+                        <a asp-page="./Index" class="btn btn-outline-info">
+                            <i class="fas fa-arrow-left"></i> Back to Cars
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            @if (Model.Car.Bookings.Any())
+            {
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Recent Bookings</h5>
+                        <div class="list-group list-group-flush">
+                            @foreach (var booking in Model.Car.Bookings.Take(3))
+                            {
+                                <div class="list-group-item">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <strong>@booking.User.FirstName @booking.User.LastName</strong><br>
+                                            <small>@booking.Type - @booking.Status</small>
+                                        </div>
+                                        <small class="text-muted">@booking.StartDate.ToString("MMM dd")</small>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function toggleFavorite(carId) {
+            // TODO: Implement favorite functionality
+            alert('Favorite functionality will be implemented in the next step!');
+        }
+    </script>
+} 
